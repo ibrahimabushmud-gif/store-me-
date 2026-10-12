@@ -4,12 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منصة المتاجر الإلكترونية المتعددة</title>
+    <!-- استدعاء أيقونات FontAwesome الاحترافية -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #2563eb;
-            --secondary-color: #1e293b;
+            --primary-color: #4f46e5;
+            --secondary-color: #0f172a;
             --bg-color: #f8fafc;
             --card-bg: #ffffff;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -21,102 +25,205 @@
         header {
             background-color: var(--secondary-color);
             color: white;
-            padding: 1rem 2rem;
+            padding: 1.2rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         .nav-links button {
             background: var(--primary-color);
             color: white;
             border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
             cursor: pointer;
             margin-left: 0.5rem;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .nav-links button:hover {
+            background: #4338ca;
         }
         .container {
             max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+            margin: 2.5rem auto;
+            padding: 0 1.5rem;
         }
         .hero {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
+        }
+        .hero h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+        .hero p {
+            color: #64748b;
+            font-size: 1.1rem;
         }
         .stores-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
         }
         .store-card {
             background: var(--card-bg);
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
         }
         .store-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
         }
-        .store-header {
-            background: var(--primary-color);
-            color: white;
-            padding: 1rem;
-            font-weight: bold;
+        .store-banner {
+            height: 140px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .store-logo {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 3px solid white;
+            position: absolute;
+            bottom: -35px;
+            right: 20px;
+            background-color: white;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         .store-body {
-            padding: 1rem;
+            padding: 2.5rem 1.5rem 1.5rem 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .store-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin: 0 0 0.5rem 0;
+            color: var(--secondary-color);
         }
         .badge {
-            display: inline-block;
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
             font-size: 0.85rem;
-            margin-bottom: 0.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
         }
-        .badge.active { background: #dcfce7; color: #166534; }
-        .badge.inactive { background: #fee2e2; color: #991b1b; }
+        /* تلوين مميز للمتاجر الفعالة مقابل غير الفعالة */
+        .badge.active { 
+            background: #ecfdf5; 
+            color: var(--success-color); 
+            border: 1px solid #a7f3d0;
+        }
+        .badge.inactive { 
+            background: #fffbeb; 
+            color: #d97706; 
+            border: 1px solid #fde68a;
+        }
+        .store-info {
+            color: #475569;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+        .store-info p {
+            margin: 0.3rem 0;
+        }
         .btn-visit {
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
             width: 100%;
-            text-align: center;
             background: var(--secondary-color);
             color: white;
-            padding: 0.5rem;
-            border-radius: 4px;
+            padding: 0.75rem;
+            border-radius: 8px;
             text-decoration: none;
-            margin-top: 1rem;
+            font-weight: 600;
+            transition: background 0.2s;
+            box-sizing: border-box;
+        }
+        .btn-visit:hover {
+            background: var(--primary-color);
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>منصتي للمتاجر</h1>
+        <h1><i class="fa-solid fa-store"></i> منصتي للمتاجر</h1>
         <div class="nav-links">
-            <button onclick="switchRole('customer')">وضع المشتري</button>
-            <button onclick="switchRole('merchant')">لوحة تحكم التاجر</button>
+            <button onclick="switchRole('customer')"><i class="fa-solid fa-user"></i> وضع المشتري</button>
+            <button onclick="switchRole('merchant')"><i class="fa-solid fa-gauge"></i> لوحة تحكم التاجر</button>
         </div>
     </header>
 
     <div class="container">
         <div class="hero">
             <h2>مرحباً بك في منصة المتاجر المتعددة</h2>
-            <p>تصفح المتاجر المتاحة أو أنشئ متجرك الخاص الآن</p>
+            <p>تصفح المتاجر المتاحة واكتشف أرقى المنتجات بكل سهولة</p>
         </div>
 
         <div class="stores-grid" id="storesContainer">
-            <!-- سيتم تعبئة المتاجر ديناميكياً عبر الجافاسكريبت -->
+            <!-- سيتم تعبئة المتاجر ديناميكياً -->
         </div>
     </div>
 
     <script>
-        // بيانات تجريبية للمتاجر
+        // بيانات المتاجر مع روابط لصور وبانرات وشعارات احترافية
         const stores = [
-            { id: 1, name: "متجر الإلكترونيات الحديثة", owner: "أحمد محمد", status: "active", desc: "متجر مخصص لبيع أحدث الأجهزة الذكية والإكسسوارات.", isSubscribed: true },
-            { id: 2, name: "عالم الملابس والأزياء", owner: "سارة خالد", status: "inactive", desc: "متجر قيد الإنشاء لعرض أحدث خطوط الموضة.", isSubscribed: false },
-            { id: 3, name: "مذاق الطبيعة للمواد الغذائية", owner: "إبراهيم أبو سهمود", status: "active", desc: "أجود المواد الغذائية الطازجة وتوصيل سريع.", isSubscribed: true }
+            { 
+                id: 1, 
+                name: "متجر الإلكترونيات الحديثة", 
+                owner: "أحمد محمد", 
+                status: "active", 
+                desc: "متجر مخصص لبيع أحدث الأجهزة الذكية والإكسسوارات الأصلية.", 
+                isSubscribed: true,
+                banner: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80",
+                logo: "https://images.unsplash.com/photo-1526738549149-8e07eca6c147?auto=format&fit=crop&w=150&q=80"
+            },
+            { 
+                id: 2, 
+                name: "عالم الملابس والأزياء", 
+                owner: "سارة خالد", 
+                status: "inactive", 
+                desc: "متجر قيد الإنشاء لعرض أحدث خطوط الموضة العالمية.", 
+                isSubscribed: false,
+                banner: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=600&q=80",
+                logo: "https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=150&q=80"
+            },
+            { 
+                id: 3, 
+                name: "مذاق الطبيعة للمواد الغذائية", 
+                owner: "إبراهيم أبو سهمود", 
+                status: "active", 
+                desc: "أجود المواد الغذائية الطازجة وتوصيل سريع حتى باب المنزل.", 
+                isSubscribed: true,
+                banner: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=600&q=80",
+                logo: "https://images.unsplash.com/photo-1506617420156-8e4536e716d7?auto=format&fit=crop&w=150&q=80"
+            }
         ];
 
         function renderStores() {
@@ -128,15 +235,26 @@
                 card.className = 'store-card';
                 
                 const badgeClass = store.isSubscribed ? 'active' : 'inactive';
-                const badgeText = store.isSubscribed ? 'مشترك وفعال للشراء' : 'معاينة فقط (غير مشترك)';
+                const badgeIcon = store.isSubscribed ? '<i class="fa-solid fa-circle-check"></i>' : '<i class="fa-solid fa-eye"></i>';
+                const badgeText = store.isSubscribed ? 'متجر نشط - متاح للشراء' : 'معاينة فقط - غير مفعّل';
                 
                 card.innerHTML = `
-                    <div class="store-header">${store.name}</div>
+                    <div class="store-banner" style="background-image: url('${store.banner}')">
+                        <div class="store-logo" style="background-image: url('${store.logo}')"></div>
+                    </div>
                     <div class="store-body">
-                        <span class="badge ${badgeClass}">${badgeText}</span>
-                        <p><strong>التاجر:</strong> ${store.owner}</p>
-                        <p>${store.desc}</p>
-                        <a href="#" class="btn-visit" onclick="openStore(${store.id})">زيارة المتجر</a>
+                        <div>
+                            <h3 class="store-title">${store.name}</h3>
+                            <span class="badge ${badgeClass}">${badgeIcon} ${badgeText}</span>
+                            <div class="store-info">
+                                <p><i class="fa-solid fa-user-tie" style="color: var(--primary-color);"></i> <strong>التاجر:</strong> ${store.owner}</p>
+                                <p style="margin-top: 8px; color: #64748b;">${store.desc}</p>
+                            </div>
+                        </div>
+                        <a href="#" class="btn-visit" onclick="openStore(${store.id})">
+                            <span>زيارة المتجر</span>
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </a>
                     </div>
                 `;
                 container.appendChild(card);
@@ -145,22 +263,21 @@
 
         function switchRole(role) {
             if(role === 'merchant') {
-                alert('تم الانتقال لوحة تحكم التاجر (يمكنك تعديل القوالب هنا لاحقاً)');
+                alert('جاري الانتقال إلى لوحة تحكم التاجر...');
             } else {
-                alert('أنت تتصفح الآن كَمُشترٍ عام');
+                alert('أنت تتصفح المنصة الآن بوضع المشتري.');
             }
         }
 
         function openStore(id) {
             const store = stores.find(s => s.id === id);
             if(store.isSubscribed) {
-                alert(`أنت الآن تتصفح "${store.name}" - ميزة الشراء مفعلة.`);
+                alert(`أنت الآن تتصفح متجر "${store.name}" - ميزة الشراء وإتمام الطلبات مفعلة.`);
             } else {
-                alert(`أنت تتصفح "${store.name}" في وضع المعاينة فقط (هذا المتجر لم يُفعل اشتراكه بعد ولا يمكن الشراء منه حالياً).`);
+                alert(`أنت تتصفح متجر "${store.name}" في وضع المعاينة فقط (المتجر غير مشترك حالياً).`);
             }
         }
 
-        // تشغيل العرض عند تحميل الصفحة
         window.onload = renderStores;
     </script>
 </body>
